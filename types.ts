@@ -1,4 +1,5 @@
 
+
 export interface Service {
   id: string;
   name: string;
@@ -48,8 +49,13 @@ export const INITIAL_SERVICES: Service[] = [
   { id: 'b8', name: 'Box Braids (Large)', description: 'Traditional box braids, large', category: 'Braiding Services', durationMinutes: 150, price: 110 },
   { id: 'b9', name: 'Tribal Braids', description: 'Fulani/Tribal style patterns', category: 'Braiding Services', durationMinutes: 180, price: 160 },
   { id: 'b10', name: 'Boho Knotless', description: 'Knotless with curly ends', category: 'Braiding Services', durationMinutes: 240, price: 180 },
-  { id: 'b11', name: 'Kids Braids', description: 'Styles for children ($45-$90)', category: 'Braiding Services', durationMinutes: 90, price: 45 },
   { id: 'b12', name: 'Take Down', description: 'Braid removal service ($20-$40)', category: 'Braiding Services', durationMinutes: 60, price: 20 },
+
+  // Kids' Corner
+  { id: 'k1', name: 'Mini Manicures & Pedicures', description: 'Gentle, colorful, and fun designs!', category: "Kids' Corner", durationMinutes: 45, price: 30 },
+  { id: 'k2', name: 'Kids’ HairStyle', description: 'From everyday trims to special occasion styles', category: "Kids' Corner", durationMinutes: 45, price: 35 },
+  { id: 'k3', name: 'Hair Braiding & Fun Styles', description: 'Cute braids, ponytails, and glitter accents', category: "Kids' Corner", durationMinutes: 90, price: 55 },
+  { id: 'k4', name: 'Special Occasion Packages', description: 'Birthday parties, photo days, or pampering!', category: "Kids' Corner", durationMinutes: 120, price: 100 },
 
   // Add-Ons
   { id: 'a1', name: 'Shine / Top Coat', description: 'Extra shine finish', category: 'Add-Ons & Extras', durationMinutes: 5, price: 5 },

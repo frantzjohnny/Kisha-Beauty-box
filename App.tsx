@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import { ClientBooking } from './components/ClientBooking';
 import { AdminDashboard } from './components/AdminDashboard';
+import { AdminLogin } from './components/AdminLogin';
 import { StorageService } from './services/storage';
 import { ShopSettings } from './types';
 import { Sparkles, ShieldCheck } from 'lucide-react';
@@ -49,6 +50,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     <div className="mt-4 text-xs text-stone-400">
                         © {new Date().getFullYear()} {settings.shopName}. All rights reserved.
                     </div>
+                    <div className="mt-2 text-[10px] text-stone-300 font-medium">
+                        Developed by Johnny Frantz T Rene
+                    </div>
                 </div>
             </footer>
         </div>
@@ -56,12 +60,36 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 const App: React.FC = () => {
+    // Check session storage for existing login session
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return sessionStorage.getItem('admin_auth') === 'true';
+    });
+
+    const handleLogin = () => {
+        sessionStorage.setItem('admin_auth', 'true');
+        setIsAuthenticated(true);
+    };
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('admin_auth');
+        setIsAuthenticated(false);
+    };
+
     return (
         <HashRouter>
             <Layout>
                 <Routes>
                     <Route path="/" element={<ClientBooking />} />
-                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route 
+                        path="/admin" 
+                        element={
+                            isAuthenticated ? (
+                                <AdminDashboard onLogout={handleLogout} />
+                            ) : (
+                                <AdminLogin onLogin={handleLogin} />
+                            )
+                        } 
+                    />
                 </Routes>
             </Layout>
         </HashRouter>

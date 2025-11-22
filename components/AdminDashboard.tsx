@@ -3,10 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { StorageService } from '../services/storage';
 import { Service, ShopSettings } from '../types';
 import { Button } from './ui/Button';
-import { Plus, Trash2, Save, ArrowLeft, Settings } from 'lucide-react';
+import { Plus, Trash2, Save, ArrowLeft, Settings, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export const AdminDashboard: React.FC = () => {
+interface AdminDashboardProps {
+  onLogout: () => void;
+}
+
+export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
   const [services, setServices] = useState<Service[]>([]);
   const [settings, setSettings] = useState<ShopSettings>(StorageService.getSettings());
   const [isEditingSettings, setIsEditingSettings] = useState(false);
@@ -57,12 +61,18 @@ export const AdminDashboard: React.FC = () => {
             <Link to="/">
               <Button variant="ghost" size="sm"><ArrowLeft className="w-5 h-5" /></Button>
             </Link>
-            <h1 className="text-xl font-serif font-bold text-stone-900">Administration</h1>
+            <h1 className="text-xl font-serif font-bold text-stone-900 hidden sm:block">Administration</h1>
           </div>
-          <Button onClick={() => setIsEditingSettings(!isEditingSettings)} variant="outline" size="sm">
-            <Settings className="w-4 h-4 mr-2" />
-            Settings
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button onClick={() => setIsEditingSettings(!isEditingSettings)} variant="outline" size="sm">
+                <Settings className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Settings</span>
+            </Button>
+            <Button onClick={onLogout} variant="ghost" size="sm" className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                <LogOut className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Logout</span>
+            </Button>
+          </div>
         </div>
       </div>
 

@@ -3,16 +3,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { StorageService } from '../services/storage';
 import { Service, BookingState, ShopSettings } from '../types';
 import { Button } from './ui/Button';
-import { Clock, CheckCircle, Sparkles, ArrowRight, ArrowLeft, MessageCircle, CreditCard, DollarSign, Banknote } from 'lucide-react';
+import { Clock, CheckCircle, Sparkles, ArrowRight, ArrowLeft, MessageCircle, CreditCard, DollarSign, Banknote, AlertTriangle } from 'lucide-react';
 
 // --- HERO SLIDESHOW COMPONENT ---
 const HeroSlideshow = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const images = [
-    "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=1000", // Nail Art / Pink
-    "https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=1000", // Makeup/Salon vibe
-    "https://images.unsplash.com/photo-1519017715179-c6f2f6ee73f4?auto=format&fit=crop&q=80&w=1000"  // Pink aesthetic
+    "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&q=80&w=1200", // Pink Manicure
+    "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&q=80&w=1200", // Braids
+    "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=1200", // Glam Portrait
+    "https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=1200"  // Beauty Tools/Makeup
   ];
 
   useEffect(() => {
@@ -20,12 +21,12 @@ const HeroSlideshow = () => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
     }, 4000); // Change every 4 seconds
     return () => clearInterval(timer);
-  }, []);
+  }, [images.length]);
 
   return (
-    <div className="relative w-full h-64 md:h-80 rounded-3xl overflow-hidden shadow-lg mb-8 group">
+    <div className="relative w-full h-[480px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl mb-8 group">
       {/* Overlay Gradient for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10" />
       
       {/* Images */}
       {images.map((img, index) => (
@@ -38,33 +39,33 @@ const HeroSlideshow = () => {
           <img 
             src={img} 
             alt="Salon ambiance" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
         </div>
       ))}
 
       {/* Hero Text Content */}
-      <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
-        <div className="flex items-center gap-2 mb-2 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
-            <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold border border-white/30">
+      <div className="absolute bottom-0 left-0 p-8 z-20 text-white">
+        <div className="flex items-center gap-2 mb-3 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
+            <span className="bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-semibold border border-white/30 tracking-wide uppercase">
                 KISHA BEAUTY BOX
             </span>
         </div>
-        <h1 className="text-3xl font-serif font-bold leading-tight drop-shadow-md opacity-0 animate-fade-in-up" style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}>
+        <h1 className="text-4xl md:text-5xl font-serif font-bold leading-tight drop-shadow-lg opacity-0 animate-fade-in-up" style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}>
           Enhance your beauty
         </h1>
-        <p className="text-white/90 text-sm mt-1 max-w-xs opacity-0 animate-fade-in-up" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
-          Elegance starts with perfect details.
+        <p className="text-white/90 text-base mt-2 max-w-sm font-light leading-relaxed opacity-0 animate-fade-in-up" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
+          Elegance starts with perfect details. Book your appointment today.
         </p>
       </div>
       
       {/* Dots Indicators */}
-      <div className="absolute bottom-4 right-6 z-20 flex gap-2">
+      <div className="absolute bottom-8 right-8 z-20 flex gap-2">
         {images.map((_, idx) => (
           <div 
             key={idx} 
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              idx === currentSlide ? 'w-6 bg-white' : 'w-1.5 bg-white/50'
+            className={`h-1.5 rounded-full transition-all duration-300 shadow-sm ${
+              idx === currentSlide ? 'w-8 bg-white' : 'w-2 bg-white/40'
             }`} 
           />
         ))}
@@ -421,7 +422,7 @@ Please confirm my appointment.`;
                 <p className="text-stone-500">Review your booking before sending.</p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg border border-stone-100 overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-lg border border-stone-100 overflow-hidden mb-8">
                 <div className="p-6 space-y-4">
                     <div className="flex justify-between border-b border-stone-100 pb-4">
                         <span className="text-stone-500">Service</span>
@@ -450,6 +451,15 @@ Please confirm my appointment.`;
                 </div>
                 <div className="bg-stone-50 p-4 text-center text-xs text-stone-400">
                     Clicking below will open WhatsApp with a pre-filled message.
+                </div>
+            </div>
+
+            {/* DEPOSIT ALERT */}
+            <div className="mb-8 bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3 items-start animate-fade-in-up">
+                <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                <div className="text-sm text-amber-800">
+                    <p className="font-bold">Deposit Required</p>
+                    <p>All bookings require a non-refundable $20 deposit. Your appointment will not be held without it.</p>
                 </div>
             </div>
 
